@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quis/resources/socket_methods.dart';
 import 'package:quis/responsive/responsive.dart';
 import 'package:quis/widgets/custom_button.dart';
 import 'package:quis/widgets/custom_text.dart';
@@ -14,6 +15,14 @@ class CreateRoomScreen extends StatefulWidget {
 
 class _CreateRoomScreenState extends State<CreateRoomScreen> {
   final TextEditingController _nameController = TextEditingController();
+  final SocketMethods _socketMethods = SocketMethods();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _socketMethods.createRoomSuccessListener(context);
+  }
 
   @override
   void dispose() {
@@ -55,7 +64,12 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
               SizedBox(
                 height: size.height * 0.05,
               ),
-              CustomButton(onTap: () {}, text: 'Create'),
+              CustomButton(
+                  onTap: () {
+                    print('taaped');
+                    _socketMethods.createRoom(_nameController.text);
+                  },
+                  text: 'Create'),
             ],
           ),
         ),
